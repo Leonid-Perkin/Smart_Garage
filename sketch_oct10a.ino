@@ -1,25 +1,36 @@
-#include <Wire.h> 
-#include <LiquidCrystal_I2C.h>
-LiquidCrystal_I2C lcd(0x3F,16,2);
-const int buttonPin = 2;
-const int buttonPin1 = 3;
-const int buttonPin2 = 4;
-const int buttonPin3 = 5;
-const int buttonPin4 = 6;
-const int buttonPin5 = 7;
-int buttonState = 0;
-int buttonState1 = 0;
-int buttonState2 = 0;
-int buttonState3 = 0;
-int buttonState4 = 0;
-int buttonState5 = 0;
-String str = "smart garage";
+#define _LCD_TYPE 1  // для работы с I2C дисплеями
+#include <LCD_1602_RUS_ALL.h>
+LCD_1602_RUS lcd(0x3F, 16, 2);
+const char buttonPin = 2;
+const char buttonPin1 = 3;
+const char buttonPin2 = 4;
+const char buttonPin3 = 5;
+const char buttonPin4 = 6;
+const char buttonPin5 = 7;
+char buttonState = 0;
+char buttonState1 = 0;
+char buttonState2 = 0;
+char buttonState3 = 0;
+char buttonState4 = 0;
+char buttonState5 = 0;
+String str = "умный гараж";
+void print_text(String s1, String s2) {
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print(s1);
+  lcd.setCursor(0, 1);
+  lcd.print(s2);
+  delay(2000);
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print(str);
+}
 void setup()
 {
-  lcd.init();                     
+  lcd.init();
   lcd.backlight();
   lcd.print(str);
-  lcd.setCursor(0, 1);
+  lcd.setCursor(0, 0);
   pinMode(buttonPin, INPUT);
   pinMode(buttonPin1, INPUT);
   pinMode(buttonPin2, INPUT);
@@ -32,84 +43,66 @@ void setup()
 void loop()
 {
   int buf = Serial.available();
-  if (buf){
+  if (buf) {
     char cBuf = Serial.read();
-    switch(cBuf){
-      case 'A':{ 
-        lcd.print("alarm enabled");
-        delay(2000);
-        lcd.clear();
-      lcd.print(str);
-      lcd.setCursor(0, 1);
-      }
+    switch (cBuf) {
+      case 'A': {
+          print_text("Сигнализация", "on");
+        }
         break;
-        case 'B':{ 
+      case 'B': {
+          print_text("Сигнализация", "off");
+
+        }
+        break;
+      case 'C': {
+          print_text("Основной свет", "on");
+        }
+        break;
+      case 'D': {
+          print_text("Основной свет", "off");
+        }
+        break;
+      case 'I': {
+          print_text("лампа", "on");
+        }
+        break;
+      case 'F': {
+          print_text("лампа", "off");
+        }
+      case 'G': {
           lcd.clear();
           lcd.setCursor(0, 0);
-          lcd.print("alarm disabled");
+          lcd.print("Прошивка test");
+          lcd.setCursor(0, 1);
+          lcd.print("10.5");
           delay(2000);
           lcd.clear();
-          lcd.print(str);
+          lcd.setCursor(0, 0);
+          lcd.print("Создал");
           lcd.setCursor(0, 1);
-        
+          lcd.print("Перкин Леонид");
+          delay(2000);
+          lcd.clear();
+          lcd.setCursor(0, 0);
+          lcd.print(str);
         }
         break;
-        case 'С':{ 
-          lcd.print("Led1_on");
-          delay(2000);
+      case 'O': {
           lcd.clear();
-          lcd.print(str);
-          lcd.setCursor(0, 1);
-        }
-          break;
-        case 'D':{ 
-          lcd.print("Led1_off");
-          delay(2000);
-          lcd.clear();
-          lcd.print(str);
-          lcd.setCursor(0, 1);
-        }
-          break;
-          case 'I':{ 
-          lcd.print("Led2_on");
-          delay(2000);
-          lcd.clear();
+          lcd.setCursor(0, 0);
+          lcd.backlight();
           lcd.print(str);
           lcd.setCursor(0, 1);
         }
         break;
-        case 'F':{ 
-          lcd.print("Led2_off");
-          delay(2000);
+      case 'P': {
           lcd.clear();
-          lcd.print(str);
+          lcd.noBacklight();
           lcd.setCursor(0, 1);
         }
-          break;
-      case 'K': {
-        lcd.clear();
-        lcd.print("Software version");
-        lcd.setCursor(0, 1);
-      lcd.print("10.5 stable");
-      delay(3000);
-        lcd.clear();
-      lcd.print(str);
-      lcd.setCursor(0, 1);
-      }
-      case 'W': {
-        lcd.clear();
-        lcd.backlight();
-        lcd.print(str);
-        lcd.setCursor(0, 1);
-      }
         break;
-      case 'E': {
-        lcd.clear();
-        lcd.noBacklight();
-        lcd.setCursor(0, 1);
-      }
-        break;
-        default:;
+      default:;
     }
   }
   buttonState = digitalRead(buttonPin);
