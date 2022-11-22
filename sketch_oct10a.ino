@@ -60,7 +60,7 @@ void loop()
         }
         break;
       case 'Z': {
-          print_text("есть", "обнавления");
+          print_text("есть", "обновления");
           digitalWrite(led4, HIGH);
         }
         break;
