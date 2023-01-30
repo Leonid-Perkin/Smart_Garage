@@ -1,0 +1,45 @@
+
+# Loads default set of integrations. Do not remove.
+default_config:
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+mqtt:
+  switch:
+    - name: "Termostat power"
+      state_topic: "homeassistant/thermostat/requests/deviceOn"
+      command_topic: "homeassistant/thermostat/setting/deviceOn"
+      qos: 0
+      payload_on: "true"
+      payload_off: "false"
+      unique_id: "Termostat power"
+  sensor:
+    - state_topic: "homeassistant/thermostat/requests/temperature"
+      name: "Termostat temperature"
+      device_class: "temperature"
+      unique_id: "Termostat temperature"
+  number:
+    - command_topic: "homeassistant/thermostat/setting/targetTemperature"
+      state_topic: "homeassistant/thermostat/requests/targetTemperature"
+      min: 6
+      max: 35
+      mode: "slider"
+      name: "Termostat set temperature"
+      unique_id: "Termostat set temperature"
+      payload_reset: 20
+      qos: 0
+  select:
+    - state_topic: "homeassistant/thermostat/requests/schedulesMode"
+      command_topic: "homeassistant/thermostat/setting/schedulesMode"
+      name: "Termostat schedulesMode"
+      options:
+          - "auto"
+          - "off"
+      unique_id: "Termostat schedulesMode"
+      qos: 0
