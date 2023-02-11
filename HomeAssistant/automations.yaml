@@ -1,0 +1,227 @@
+- id: '1665607450655'
+  alias: Движение двери
+  description: Срабатывание сенсора двери
+  trigger:
+  - type: motion
+    platform: device
+    device_id: 9544d527ec53c688fdda9b8c50820a5b
+    entity_id: binary_sensor.door_opening_sensor
+    domain: binary_sensor
+  - platform: state
+    entity_id:
+    - switch.garage_door_opening_button
+    from: 'off'
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: input_boolean.signalizatsiia
+    state: 'on'
+  action:
+  - service: motioneye.snapshot
+    data: {}
+    target:
+      area_id: garazh
+      device_id: abbbda31c5d003fa16420e1e0e6f5c5a
+      entity_id: camera.camera1
+    enabled: true
+  - service: notify.notify
+    data:
+      message: Тревога
+  - service: media_player.play_media
+    target:
+      entity_id: media_player.yandex_station_ff98f0293d210d02a1ff228c
+    data:
+      media_content_id: media-source://tts/yandex_station?message=%D0%A2%D1%80%D0%B5%D0%B2%D0%BE%D0%B3%D0%B0.+%D0%A1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D0%BB+%D0%B4%D0%B0%D1%82%D1%87%D0%B8%D0%BA+%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D1%82%D0%B8%D1%8F+%D0%B2%D0%BE%D1%80%D0%BE%D1%82
+      media_content_type: text
+    metadata:
+      title: Тревога. Сработал датчик открытия ворот
+      thumbnail: https://brands.home-assistant.io/_/tts/icon.png
+      media_class: app
+      children_media_class:
+      navigateIds:
+      - {}
+      - media_content_type: text
+        media_content_id: media-source://tts/yandex_station?message=%D0%A2%D1%80%D0%B5%D0%B2%D0%BE%D0%B3%D0%B0+%D0%BA%D1%82%D0%BE+%D1%82%D0%BE+%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D0%BB+%D0%B4%D0%B2%D0%B5%D1%80%D1%8C+
+      - media_content_type: text
+        media_content_id: media-source://tts/yandex_station?message=%D0%A2%D1%80%D0%B5%D0%B2%D0%BE%D0%B3%D0%B0.+%D0%9E%D1%82%D0%BA%D1%80%D1%8B%D1%82%D0%B8%D0%B5+%D0%B4%D0%B2%D0%B5%D1%80%D0%B8
+      - media_content_type: text
+        media_content_id: media-source://tts/yandex_station?message=%D0%A2%D1%80%D0%B5%D0%B2%D0%BE%D0%B3%D0%B0.+%D0%A1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D0%BB+%D0%B4%D0%B0%D1%82%D1%87%D0%B8%D0%BA+%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D1%82%D0%B8%D1%8F+%D0%B2%D0%BE%D1%80%D0%BE%D1%82
+  - service: media_player.volume_set
+    data:
+      volume_level: 1
+    target:
+      area_id: garazh
+      device_id: 97845552df8830825c9be5b3bdf24eeb
+      entity_id: media_player.yandex_station_ff98f0293d210d02a1ff228c
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - service: media_player.play_media
+    target:
+      entity_id: media_player.vlc_telnet
+    data:
+      media_content_id: media-source://media_source/local/gromkiy-zvuk-sirenyi.mp3
+      media_content_type: audio/mpeg
+    metadata:
+      title: gromkiy-zvuk-sirenyi.mp3
+      thumbnail:
+      media_class: music
+      children_media_class:
+      navigateIds:
+      - {}
+      - media_content_type: app
+        media_content_id: media-source://media_source
+  mode: single
+- id: '1667494184287'
+  alias: Yandex_tts_Сигнализация включена
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_boolean.signalizatsiia
+  condition:
+  - condition: state
+    entity_id: input_boolean.signalizatsiia
+    state: 'on'
+  action:
+  - service: media_player.volume_set
+    data:
+      volume_level: 0.73
+    target:
+      entity_id: media_player.yandex_station_ff98f0293d210d02a1ff228c
+  - service: media_player.play_media
+    target:
+      entity_id: media_player.yandex_station_ff98f0293d210d02a1ff228c
+    data:
+      media_content_id: media-source://tts/yandex_station?message=%D0%A1%D0%B8%D0%B3%D0%BD%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F+%D0%B2%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B0
+      media_content_type: text
+    metadata:
+      title: Сигнализация включена
+      thumbnail: https://brands.home-assistant.io/_/tts/icon.png
+      media_class: app
+      children_media_class:
+      navigateIds:
+      - {}
+      - media_content_type: text
+        media_content_id: media-source://tts/yandex_station?message=%D0%A1%D0%B8%D0%B3%D0%BD%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F+%D0%B2%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B0
+  - service: media_player.volume_set
+    data:
+      volume_level: 0.4
+    target:
+      entity_id: media_player.yandex_station_ff98f0293d210d02a1ff228c
+  mode: single
+- id: '1667494286002'
+  alias: Yandex_tts_Сигнализация отключена
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_boolean.signalizatsiia
+  condition:
+  - condition: state
+    entity_id: input_boolean.signalizatsiia
+    state: 'off'
+  action:
+  - service: media_player.volume_set
+    data:
+      volume_level: 0.7
+    target:
+      area_id: garazh
+      entity_id: media_player.yandex_station_ff98f0293d210d02a1ff228c
+  - service: media_player.play_media
+    target:
+      entity_id: media_player.yandex_station_ff98f0293d210d02a1ff228c
+    data:
+      media_content_id: media-source://tts/yandex_station?message=%D0%A1%D0%B8%D0%B3%D0%BD%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F+%D0%BE%D1%82%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B0
+      media_content_type: text
+    metadata:
+      title: Сигнализация отключена
+      thumbnail: https://brands.home-assistant.io/_/tts/icon.png
+      media_class: app
+      children_media_class:
+      navigateIds:
+      - {}
+      - media_content_type: text
+        media_content_id: media-source://tts/yandex_station?message=%D0%A1%D0%B8%D0%B3%D0%BD%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F+%D0%B2%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B0
+      - media_content_type: text
+        media_content_id: media-source://tts/yandex_station?message=%D0%A1%D0%B8%D0%B3%D0%BD%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F+%D0%BE%D1%82%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B0
+  - service: media_player.volume_set
+    data:
+      volume_level: 0.38
+    target:
+      area_id: garazh
+      entity_id: media_player.yandex_station_ff98f0293d210d02a1ff228c
+  mode: single
+- id: '1676116347901'
+  alias: Срабатывания сенсора движения
+  description: Срабатывания сенсора движения
+  trigger:
+  - type: motion
+    platform: device
+    device_id: 9544d527ec53c688fdda9b8c50820a5b
+    entity_id: binary_sensor.motion
+    domain: binary_sensor
+  condition:
+  - condition: state
+    entity_id: input_boolean.signalizatsiia
+    state: 'on'
+  action:
+  - service: motioneye.snapshot
+    data: {}
+    target:
+      area_id: garazh
+      device_id: abbbda31c5d003fa16420e1e0e6f5c5a
+      entity_id: camera.camera1
+    enabled: true
+  - service: notify.notify
+    data:
+      message: Тревога
+  - service: media_player.play_media
+    target:
+      entity_id: media_player.yandex_station_ff98f0293d210d02a1ff228c
+    data:
+      media_content_id: media-source://tts/yandex_station?message=%D0%A2%D1%80%D0%B5%D0%B2%D0%BE%D0%B3%D0%B0.+%D0%A1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D0%BB+%D0%B4%D0%B0%D1%82%D1%87%D0%B8%D0%BA+%D0%B4%D0%B2%D0%B8%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F
+      media_content_type: text
+    metadata:
+      title: Тревога. Сработал датчик движения
+      thumbnail: https://brands.home-assistant.io/_/tts/icon.png
+      media_class: app
+      children_media_class:
+      navigateIds:
+      - {}
+      - media_content_type: text
+        media_content_id: media-source://tts/yandex_station?message=%D0%A2%D1%80%D0%B5%D0%B2%D0%BE%D0%B3%D0%B0+%D0%BA%D1%82%D0%BE+%D1%82%D0%BE+%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D0%BB+%D0%B4%D0%B2%D0%B5%D1%80%D1%8C+
+      - media_content_type: text
+        media_content_id: media-source://tts/yandex_station?message=%D0%A2%D1%80%D0%B5%D0%B2%D0%BE%D0%B3%D0%B0.+%D0%9E%D1%82%D0%BA%D1%80%D1%8B%D1%82%D0%B8%D0%B5+%D0%B4%D0%B2%D0%B5%D1%80%D0%B8
+      - media_content_type: text
+        media_content_id: media-source://tts/yandex_station?message=%D0%A2%D1%80%D0%B5%D0%B2%D0%BE%D0%B3%D0%B0.+%D0%A1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D0%BB+%D0%B4%D0%B0%D1%82%D1%87%D0%B8%D0%BA+%D0%B4%D0%B2%D0%B8%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F
+  - service: media_player.volume_set
+    data:
+      volume_level: 1
+    target:
+      area_id: garazh
+      device_id: 97845552df8830825c9be5b3bdf24eeb
+      entity_id: media_player.yandex_station_ff98f0293d210d02a1ff228c
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - service: media_player.play_media
+    target:
+      entity_id: media_player.vlc_telnet
+    data:
+      media_content_id: media-source://media_source/local/gromkiy-zvuk-sirenyi.mp3
+      media_content_type: audio/mpeg
+    metadata:
+      title: gromkiy-zvuk-sirenyi.mp3
+      thumbnail:
+      media_class: music
+      children_media_class:
+      navigateIds:
+      - {}
+      - media_content_type: app
+        media_content_id: media-source://media_source
+  mode: single
