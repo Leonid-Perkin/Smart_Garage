@@ -39,8 +39,8 @@ output:
     id: gpio_2
 
   - platform: ledc
-    pin: GPIO16
-    id: gpio_16
+    pin: GPIO12
+    id: gpio_12
 
 light:
   - platform: monochromatic
@@ -53,7 +53,7 @@ light:
           transition_length: 0.5s
           update_interval: 0.5s
   - platform: monochromatic
-    output: gpio_16
+    output: gpio_12
     name: "General light"
     effects:
       - pulse:
@@ -61,7 +61,7 @@ light:
           name: "Fast Pulse"
           transition_length: 0.5s
           update_interval: 0.5s
- 
+
 sensor:
   - platform: dht
     pin: GPIO 5
@@ -80,6 +80,18 @@ switch:
     pin: GPIO 4
     name: "Garage door closing button"
     id: close_switch
+  - platform: gpio
+    pin: GPIO 22
+    name: "open_case1"
+    id: open_case1
+  - platform: gpio
+    pin: GPIO 21
+    name: "open_case2"
+    id: open_case2
+  - platform: gpio
+    pin: GPIO 33
+    name: "fan"
+    id: fan
 cover:
   - platform: template
     name: "Garage Door"
@@ -104,5 +116,11 @@ binary_sensor:
     pin:
       number: 17
       inverted: true
-    name: "Door opening sensor"
+    name: "motion1"
+    device_class: motion
+  - platform: gpio
+    pin:
+      number: 25
+      inverted: false
+    name: "motion2"
     device_class: motion
