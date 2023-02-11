@@ -1,1 +1,1194 @@
-[{"id":"517bc46ea1daa0c3","type":"tab","label":"Поток 1","disabled":false,"info":"","env":[]},{"id":"4bafedd0.c272a4","type":"server","name":"Home Assistant","addon":true},{"id":"cf415567629d6cf7","type":"serial-port","serialport":"/dev/ttyUSB0","serialbaud":"9600","databits":"8","parity":"none","stopbits":"1","waitfor":"","dtr":"none","rts":"none","cts":"none","dsr":"none","newline":"1","bin":"false","out":"time","addchar":"","responsetimeout":"10000"},{"id":"0e5476ec5f01cef7","type":"telegram bot","botname":"test","usernames":"","chatids":"","baseapiurl":"","updatemode":"polling","pollinterval":"300","usesocks":false,"sockshost":"","socksprotocol":"socks5","socksport":"6667","socksusername":"anonymous","sockspassword":"","bothost":"","botpath":"","localbotport":"8443","publicbotport":"8443","privatekey":"","certificate":"","useselfsignedcertificate":false,"sslterminated":false,"verboselogging":false},{"id":"6f54c7869e8da14a","type":"server-state-changed","z":"517bc46ea1daa0c3","name":"Сигнализация","server":"4bafedd0.c272a4","version":4,"exposeToHomeAssistant":false,"haConfig":[{"property":"name","value":""},{"property":"icon","value":""}],"entityidfilter":"input_boolean.signalizatsiia","entityidfiltertype":"exact","outputinitially":false,"state_type":"str","haltifstate":"","halt_if_type":"str","halt_if_compare":"is","outputs":1,"output_only_on_state_change":true,"for":"0","forType":"num","forUnits":"minutes","ignorePrevStateNull":false,"ignorePrevStateUnknown":false,"ignorePrevStateUnavailable":false,"ignoreCurrentStateUnknown":false,"ignoreCurrentStateUnavailable":false,"outputProperties":[{"property":"payload","propertyType":"msg","value":"","valueType":"entityState"},{"property":"data","propertyType":"msg","value":"","valueType":"eventData"},{"property":"topic","propertyType":"msg","value":"","valueType":"triggerId"}],"x":160,"y":120,"wires":[["c9758adfeb1fc7c0"]]},{"id":"044e8db787426816","type":"serial out","z":"517bc46ea1daa0c3","name":"ar","serial":"cf415567629d6cf7","x":490,"y":240,"wires":[]},{"id":"c9758adfeb1fc7c0","type":"switch","z":"517bc46ea1daa0c3","name":"","property":"payload","propertyType":"msg","rules":[{"t":"eq","v":"on","vt":"str"},{"t":"eq","v":"off","vt":"str"}],"checkall":"true","repair":false,"outputs":2,"x":170,"y":200,"wires":[["0c3e3e6fef530646","65eaec614cdd2c8b"],["e6142a1b9f99807d","f7a633964403faf3"]]},{"id":"0c3e3e6fef530646","type":"trigger","z":"517bc46ea1daa0c3","name":"","op1":"A","op2":"","op1type":"str","op2type":"nul","duration":"1","extend":false,"overrideDelay":false,"units":"ms","reset":"0","bytopic":"all","topic":"topic","outputs":1,"x":170,"y":320,"wires":[["044e8db787426816"]]},{"id":"e6142a1b9f99807d","type":"trigger","z":"517bc46ea1daa0c3","name":"","op1":"B","op2":"","op1type":"str","op2type":"nul","duration":"1","extend":false,"overrideDelay":false,"units":"ms","reset":"0","bytopic":"all","topic":"topic","outputs":1,"x":170,"y":360,"wires":[["044e8db787426816"]]},{"id":"65eaec614cdd2c8b","type":"function","z":"517bc46ea1daa0c3","name":"function 1","func":"msg.payload = { chatId: 1355843881, type: 'message', content: 'Сигнализация включена' };\n\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":160,"y":240,"wires":[["af7136f3289df062"]]},{"id":"af7136f3289df062","type":"telegram sender","z":"517bc46ea1daa0c3","name":"","bot":"0e5476ec5f01cef7","haserroroutput":false,"outputs":1,"x":150,"y":640,"wires":[[]]},{"id":"f7a633964403faf3","type":"function","z":"517bc46ea1daa0c3","name":"function 2","func":"msg.payload = { chatId: 1355843881, type: 'message', content: 'Сигнализация выключена' };\n\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":160,"y":280,"wires":[["af7136f3289df062"]]},{"id":"0584453a7cf4071b","type":"serial in","z":"517bc46ea1daa0c3","name":"","serial":"cf415567629d6cf7","x":450,"y":500,"wires":[["b545833b1e18abd7"]]},{"id":"b545833b1e18abd7","type":"switch","z":"517bc46ea1daa0c3","name":"","property":"payload","propertyType":"msg","rules":[{"t":"eq","v":"a","vt":"str"},{"t":"eq","v":"b","vt":"str"},{"t":"eq","v":"c","vt":"str"},{"t":"eq","v":"d","vt":"str"},{"t":"eq","v":"i","vt":"str"},{"t":"eq","v":"f","vt":"str"}],"checkall":"true","repair":false,"outputs":6,"x":450,"y":420,"wires":[["0c3e3e6fef530646","2132b2cad67827c0"],["92e41315c614ba79","e6142a1b9f99807d"],["e6e75e19ef4edc2f","4ca4dd9c954b0ea9"],["474114dd0fdd2cbf","784bcc26b9ba62b8"],["8094f540f1a95bac"],["aac2d19754aff0a4"]]},{"id":"2132b2cad67827c0","type":"api-call-service","z":"517bc46ea1daa0c3","name":"","server":"4bafedd0.c272a4","version":5,"debugenabled":false,"domain":"input_boolean","service":"turn_on","areaId":[],"deviceId":[],"entityId":["input_boolean.signalizatsiia"],"data":"","dataType":"jsonata","mergeContext":"","mustacheAltTags":false,"outputProperties":[],"queue":"none","x":180,"y":500,"wires":[[]]},{"id":"3ce0b73aa2fd2845","type":"telegram command","z":"517bc46ea1daa0c3","name":"","command":"/on_alarm","description":"","registercommand":false,"language":"","scope":"default","bot":"0e5476ec5f01cef7","strict":false,"hasresponse":true,"useregex":false,"removeregexcommand":false,"outputs":2,"x":360,"y":760,"wires":[["2132b2cad67827c0"],[]]},{"id":"92e41315c614ba79","type":"api-call-service","z":"517bc46ea1daa0c3","name":"","server":"4bafedd0.c272a4","version":5,"debugenabled":false,"domain":"input_boolean","service":"turn_off","areaId":[],"deviceId":[],"entityId":["input_boolean.signalizatsiia"],"data":"","dataType":"jsonata","mergeContext":"","mustacheAltTags":false,"outputProperties":[],"queue":"none","x":180,"y":420,"wires":[[]]},{"id":"a383bbbf4e1f81ef","type":"telegram command","z":"517bc46ea1daa0c3","name":"","command":"/off_alarm","description":"","registercommand":false,"language":"","scope":"default","bot":"0e5476ec5f01cef7","strict":false,"hasresponse":true,"useregex":false,"removeregexcommand":false,"outputs":2,"x":360,"y":700,"wires":[["92e41315c614ba79"],[]]},{"id":"051cce485c09b4e8","type":"telegram command","z":"517bc46ea1daa0c3","name":"","command":"/help","description":"","registercommand":false,"language":"","scope":"default","bot":"0e5476ec5f01cef7","strict":false,"hasresponse":true,"useregex":false,"removeregexcommand":false,"outputs":2,"x":110,"y":720,"wires":[["885771a28fe9b6a1"],[]]},{"id":"3ce55f501a868d2e","type":"telegram sender","z":"517bc46ea1daa0c3","name":"","bot":"0e5476ec5f01cef7","haserroroutput":false,"outputs":1,"x":390,"y":820,"wires":[[]]},{"id":"885771a28fe9b6a1","type":"function","z":"517bc46ea1daa0c3","name":"function 3","func":"msg.payload = { chatId: 1355843881, type: 'message', content: 'Команды: /on_alarm\\n/off_alarm\\n/on_general_light\\n/off_general_light\\n/on_light_above_the_work_area\\n/off_light_above_the_work_area' };\n\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":140,"y":800,"wires":[["3ce55f501a868d2e"]]},{"id":"969ab0d9129b17aa","type":"server-state-changed","z":"517bc46ea1daa0c3","name":"основной свет","server":"4bafedd0.c272a4","version":4,"exposeToHomeAssistant":false,"haConfig":[{"property":"name","value":""},{"property":"icon","value":""}],"entityidfilter":"light.general_light","entityidfiltertype":"exact","outputinitially":false,"state_type":"str","haltifstate":"","halt_if_type":"str","halt_if_compare":"is","outputs":1,"output_only_on_state_change":true,"for":"0","forType":"num","forUnits":"minutes","ignorePrevStateNull":false,"ignorePrevStateUnknown":false,"ignorePrevStateUnavailable":false,"ignoreCurrentStateUnknown":false,"ignoreCurrentStateUnavailable":false,"outputProperties":[{"property":"payload","propertyType":"msg","value":"","valueType":"entityState"},{"property":"data","propertyType":"msg","value":"","valueType":"eventData"},{"property":"topic","propertyType":"msg","value":"","valueType":"triggerId"}],"x":740,"y":100,"wires":[["1928a61b2a5b5c96"]]},{"id":"1928a61b2a5b5c96","type":"switch","z":"517bc46ea1daa0c3","name":"","property":"payload","propertyType":"msg","rules":[{"t":"eq","v":"on","vt":"str"},{"t":"eq","v":"off","vt":"str"}],"checkall":"true","repair":false,"outputs":2,"x":730,"y":160,"wires":[["e6e75e19ef4edc2f","2c4f2ed84a29d348"],["474114dd0fdd2cbf","0608475448fd07ff"]]},{"id":"e6e75e19ef4edc2f","type":"trigger","z":"517bc46ea1daa0c3","name":"","op1":"С","op2":"","op1type":"str","op2type":"nul","duration":"1","extend":false,"overrideDelay":false,"units":"ms","reset":"0","bytopic":"all","topic":"topic","outputs":1,"x":990,"y":160,"wires":[["044e8db787426816"]]},{"id":"474114dd0fdd2cbf","type":"trigger","z":"517bc46ea1daa0c3","name":"","op1":"D","op2":"","op1type":"str","op2type":"nul","duration":"1","extend":false,"overrideDelay":false,"units":"ms","reset":"0","bytopic":"all","topic":"topic","outputs":1,"x":990,"y":200,"wires":[["044e8db787426816"]]},{"id":"2c4f2ed84a29d348","type":"function","z":"517bc46ea1daa0c3","name":"function 4","func":"msg.payload = { chatId: 1355843881, type: 'message', content: 'Основной свет включён' };\n\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":1000,"y":240,"wires":[["af7136f3289df062"]]},{"id":"0608475448fd07ff","type":"function","z":"517bc46ea1daa0c3","name":"function 5","func":"msg.payload = { chatId: 1355843881, type: 'message', content: 'Основной свет выключен' };\n\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":1000,"y":280,"wires":[["af7136f3289df062"]]},{"id":"4ca4dd9c954b0ea9","type":"api-call-service","z":"517bc46ea1daa0c3","name":"","server":"4bafedd0.c272a4","version":5,"debugenabled":false,"domain":"light","service":"turn_on","areaId":[],"deviceId":[],"entityId":["light.general_light"],"data":"","dataType":"jsonata","mergeContext":"","mustacheAltTags":false,"outputProperties":[],"queue":"none","x":990,"y":400,"wires":[[]]},{"id":"784bcc26b9ba62b8","type":"api-call-service","z":"517bc46ea1daa0c3","name":"","server":"4bafedd0.c272a4","version":5,"debugenabled":false,"domain":"light","service":"turn_off","areaId":[],"deviceId":[],"entityId":["light.general_light"],"data":"","dataType":"jsonata","mergeContext":"","mustacheAltTags":false,"outputProperties":[],"queue":"none","x":990,"y":460,"wires":[[]]},{"id":"70c77ee95495a9c3","type":"telegram command","z":"517bc46ea1daa0c3","name":"","command":"/on_general_light","description":"","registercommand":false,"language":"","scope":"default","bot":"0e5476ec5f01cef7","strict":false,"hasresponse":true,"useregex":false,"removeregexcommand":false,"outputs":2,"x":560,"y":760,"wires":[["4ca4dd9c954b0ea9"],[]]},{"id":"76832fc42f21286f","type":"telegram command","z":"517bc46ea1daa0c3","name":"","command":"/off_general_light","description":"","registercommand":false,"language":"","scope":"default","bot":"0e5476ec5f01cef7","strict":false,"hasresponse":true,"useregex":false,"removeregexcommand":false,"outputs":2,"x":560,"y":700,"wires":[["784bcc26b9ba62b8"],[]]},{"id":"5f7cc09d9290ce25","type":"server-state-changed","z":"517bc46ea1daa0c3","name":"Свет над рабочим местом","server":"4bafedd0.c272a4","version":4,"exposeToHomeAssistant":false,"haConfig":[{"property":"name","value":""},{"property":"icon","value":""}],"entityidfilter":"light.light_above_the_work_area","entityidfiltertype":"exact","outputinitially":false,"state_type":"str","haltifstate":"","halt_if_type":"str","halt_if_compare":"is","outputs":1,"output_only_on_state_change":true,"for":"0","forType":"num","forUnits":"minutes","ignorePrevStateNull":false,"ignorePrevStateUnknown":false,"ignorePrevStateUnavailable":false,"ignoreCurrentStateUnknown":false,"ignoreCurrentStateUnavailable":false,"outputProperties":[{"property":"payload","propertyType":"msg","value":"","valueType":"entityState"},{"property":"data","propertyType":"msg","value":"","valueType":"eventData"},{"property":"topic","propertyType":"msg","value":"","valueType":"triggerId"}],"x":990,"y":580,"wires":[["32b24d2024674b3f"]]},{"id":"32b24d2024674b3f","type":"switch","z":"517bc46ea1daa0c3","name":"","property":"payload","propertyType":"msg","rules":[{"t":"eq","v":"on","vt":"str"},{"t":"eq","v":"off","vt":"str"}],"checkall":"true","repair":false,"outputs":2,"x":950,"y":640,"wires":[["d54b3e5f34988ff3","e8d5928a53694034"],["b652b10c734534a4","b6208997940d9cae"]]},{"id":"d54b3e5f34988ff3","type":"trigger","z":"517bc46ea1daa0c3","name":"","op1":"I","op2":"","op1type":"str","op2type":"nul","duration":"1","extend":false,"overrideDelay":false,"units":"ms","reset":"0","bytopic":"all","topic":"topic","outputs":1,"x":1210,"y":640,"wires":[["044e8db787426816"]]},{"id":"b652b10c734534a4","type":"trigger","z":"517bc46ea1daa0c3","name":"","op1":"F","op2":"","op1type":"str","op2type":"nul","duration":"1","extend":false,"overrideDelay":false,"units":"ms","reset":"0","bytopic":"all","topic":"topic","outputs":1,"x":1210,"y":680,"wires":[["044e8db787426816"]]},{"id":"e8d5928a53694034","type":"function","z":"517bc46ea1daa0c3","name":"function 6","func":"msg.payload = { chatId: 1355843881, type: 'message', content: 'Свет над рабочим местом  включён' };\n\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":1220,"y":720,"wires":[["af7136f3289df062"]]},{"id":"b6208997940d9cae","type":"function","z":"517bc46ea1daa0c3","name":"function 7","func":"msg.payload = { chatId: 1355843881, type: 'message', content: 'Свет над рабочим местом выключен' };\n\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":1220,"y":760,"wires":[["af7136f3289df062"]]},{"id":"8094f540f1a95bac","type":"api-call-service","z":"517bc46ea1daa0c3","name":"","server":"4bafedd0.c272a4","version":5,"debugenabled":false,"domain":"light","service":"turn_on","areaId":[],"deviceId":[],"entityId":["light.light_above_the_work_area"],"data":"","dataType":"jsonata","mergeContext":"","mustacheAltTags":false,"outputProperties":[],"queue":"none","x":1210,"y":880,"wires":[[]]},{"id":"aac2d19754aff0a4","type":"api-call-service","z":"517bc46ea1daa0c3","name":"","server":"4bafedd0.c272a4","version":5,"debugenabled":false,"domain":"light","service":"turn_off","areaId":[],"deviceId":[],"entityId":["light.light_above_the_work_area"],"data":"","dataType":"jsonata","mergeContext":"","mustacheAltTags":false,"outputProperties":[],"queue":"none","x":1210,"y":940,"wires":[[]]},{"id":"c4ec7e57d3d6ae7f","type":"telegram command","z":"517bc46ea1daa0c3","name":"","command":"/off_light_above_the_work_area","description":"","registercommand":false,"language":"","scope":"default","bot":"0e5476ec5f01cef7","strict":false,"hasresponse":true,"useregex":false,"removeregexcommand":false,"outputs":2,"x":650,"y":880,"wires":[["aac2d19754aff0a4"],[]]},{"id":"a5201edc843791df","type":"telegram command","z":"517bc46ea1daa0c3","name":"","command":"/on_light_above_the_work_area","description":"","registercommand":false,"language":"","scope":"default","bot":"0e5476ec5f01cef7","strict":false,"hasresponse":true,"useregex":false,"removeregexcommand":false,"outputs":2,"x":650,"y":820,"wires":[["8094f540f1a95bac"],[]]},{"id":"aa0f220093e70063","type":"server-state-changed","z":"517bc46ea1daa0c3","name":"","server":"4bafedd0.c272a4","version":4,"exposeToHomeAssistant":false,"haConfig":[{"property":"name","value":""},{"property":"icon","value":""}],"entityidfilter":"automation.novaia_avtomatizatsiia_2","entityidfiltertype":"exact","outputinitially":false,"state_type":"str","haltifstate":"","halt_if_type":"str","halt_if_compare":"is","outputs":1,"output_only_on_state_change":true,"for":"0","forType":"num","forUnits":"minutes","ignorePrevStateNull":false,"ignorePrevStateUnknown":false,"ignorePrevStateUnavailable":false,"ignoreCurrentStateUnknown":false,"ignoreCurrentStateUnavailable":false,"outputProperties":[{"property":"payload","propertyType":"msg","value":"","valueType":"entityState"},{"property":"data","propertyType":"msg","value":"","valueType":"eventData"},{"property":"topic","propertyType":"msg","value":"","valueType":"triggerId"}],"x":210,"y":1000,"wires":[["25925eab7566ef68","82cf79744ae722a3"]]},{"id":"25925eab7566ef68","type":"function","z":"517bc46ea1daa0c3","name":"function 8","func":"msg.payload = { chatId: 1355843881, type: 'message', content: 'Тревога кто-то открыл дверь' };\n\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":420,"y":1060,"wires":[["af7136f3289df062"]]},{"id":"82cf79744ae722a3","type":"debug","z":"517bc46ea1daa0c3","name":"debug 1","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"false","statusVal":"","statusType":"auto","x":820,"y":1040,"wires":[]}]
+[
+  {
+    "id": "517bc46ea1daa0c3",
+    "type": "tab",
+    "label": "Поток 1",
+    "disabled": false,
+    "info": "",
+    "env": []
+  },
+  {
+    "id": "4bafedd0.c272a4",
+    "type": "server",
+    "name": "Home Assistant",
+    "addon": true
+  },
+  {
+    "id": "cf415567629d6cf7",
+    "type": "serial-port",
+    "serialport": "/dev/ttyUSB0",
+    "serialbaud": "9600",
+    "databits": "8",
+    "parity": "none",
+    "stopbits": "1",
+    "waitfor": "",
+    "dtr": "none",
+    "rts": "none",
+    "cts": "none",
+    "dsr": "none",
+    "newline": "1",
+    "bin": "false",
+    "out": "time",
+    "addchar": "",
+    "responsetimeout": "10000"
+  },
+  {
+    "id": "0e5476ec5f01cef7",
+    "type": "telegram bot",
+    "botname": "test",
+    "usernames": "",
+    "chatids": "",
+    "baseapiurl": "",
+    "updatemode": "polling",
+    "pollinterval": "300",
+    "usesocks": false,
+    "sockshost": "",
+    "socksprotocol": "socks5",
+    "socksport": "6667",
+    "socksusername": "anonymous",
+    "sockspassword": "",
+    "bothost": "",
+    "botpath": "",
+    "localbotport": "8443",
+    "publicbotport": "8443",
+    "privatekey": "",
+    "certificate": "",
+    "useselfsignedcertificate": false,
+    "sslterminated": false,
+    "verboselogging": false
+  },
+  {
+    "id": "6f54c7869e8da14a",
+    "type": "server-state-changed",
+    "z": "517bc46ea1daa0c3",
+    "name": "Сигнализация",
+    "server": "4bafedd0.c272a4",
+    "version": 4,
+    "exposeToHomeAssistant": false,
+    "haConfig": [
+      {
+        "property": "name",
+        "value": ""
+      },
+      {
+        "property": "icon",
+        "value": ""
+      }
+    ],
+    "entityidfilter": "input_boolean.signalizatsiia",
+    "entityidfiltertype": "exact",
+    "outputinitially": false,
+    "state_type": "str",
+    "haltifstate": "",
+    "halt_if_type": "str",
+    "halt_if_compare": "is",
+    "outputs": 1,
+    "output_only_on_state_change": true,
+    "for": "0",
+    "forType": "num",
+    "forUnits": "minutes",
+    "ignorePrevStateNull": false,
+    "ignorePrevStateUnknown": false,
+    "ignorePrevStateUnavailable": false,
+    "ignoreCurrentStateUnknown": false,
+    "ignoreCurrentStateUnavailable": false,
+    "outputProperties": [
+      {
+        "property": "payload",
+        "propertyType": "msg",
+        "value": "",
+        "valueType": "entityState"
+      },
+      {
+        "property": "data",
+        "propertyType": "msg",
+        "value": "",
+        "valueType": "eventData"
+      },
+      {
+        "property": "topic",
+        "propertyType": "msg",
+        "value": "",
+        "valueType": "triggerId"
+      }
+    ],
+    "x": 160,
+    "y": 120,
+    "wires": [
+      [
+        "c9758adfeb1fc7c0"
+      ]
+    ]
+  },
+  {
+    "id": "044e8db787426816",
+    "type": "serial out",
+    "z": "517bc46ea1daa0c3",
+    "name": "ar",
+    "serial": "cf415567629d6cf7",
+    "x": 490,
+    "y": 240,
+    "wires": []
+  },
+  {
+    "id": "c9758adfeb1fc7c0",
+    "type": "switch",
+    "z": "517bc46ea1daa0c3",
+    "name": "",
+    "property": "payload",
+    "propertyType": "msg",
+    "rules": [
+      {
+        "t": "eq",
+        "v": "on",
+        "vt": "str"
+      },
+      {
+        "t": "eq",
+        "v": "off",
+        "vt": "str"
+      }
+    ],
+    "checkall": "true",
+    "repair": false,
+    "outputs": 2,
+    "x": 170,
+    "y": 200,
+    "wires": [
+      [
+        "0c3e3e6fef530646",
+        "65eaec614cdd2c8b"
+      ],
+      [
+        "e6142a1b9f99807d",
+        "f7a633964403faf3"
+      ]
+    ]
+  },
+  {
+    "id": "0c3e3e6fef530646",
+    "type": "trigger",
+    "z": "517bc46ea1daa0c3",
+    "name": "",
+    "op1": "A",
+    "op2": "",
+    "op1type": "str",
+    "op2type": "nul",
+    "duration": "1",
+    "extend": false,
+    "overrideDelay": false,
+    "units": "ms",
+    "reset": "0",
+    "bytopic": "all",
+    "topic": "topic",
+    "outputs": 1,
+    "x": 170,
+    "y": 320,
+    "wires": [
+      [
+        "044e8db787426816"
+      ]
+    ]
+  },
+  {
+    "id": "e6142a1b9f99807d",
+    "type": "trigger",
+    "z": "517bc46ea1daa0c3",
+    "name": "",
+    "op1": "B",
+    "op2": "",
+    "op1type": "str",
+    "op2type": "nul",
+    "duration": "1",
+    "extend": false,
+    "overrideDelay": false,
+    "units": "ms",
+    "reset": "0",
+    "bytopic": "all",
+    "topic": "topic",
+    "outputs": 1,
+    "x": 170,
+    "y": 360,
+    "wires": [
+      [
+        "044e8db787426816"
+      ]
+    ]
+  },
+  {
+    "id": "65eaec614cdd2c8b",
+    "type": "function",
+    "z": "517bc46ea1daa0c3",
+    "name": "function 1",
+    "func": "msg.payload = { chatId: 1355843881, type: 'message', content: 'Сигнализация включена' };\n\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 160,
+    "y": 240,
+    "wires": [
+      [
+        "af7136f3289df062"
+      ]
+    ]
+  },
+  {
+    "id": "af7136f3289df062",
+    "type": "telegram sender",
+    "z": "517bc46ea1daa0c3",
+    "name": "",
+    "bot": "0e5476ec5f01cef7",
+    "haserroroutput": false,
+    "outputs": 1,
+    "x": 150,
+    "y": 640,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "f7a633964403faf3",
+    "type": "function",
+    "z": "517bc46ea1daa0c3",
+    "name": "function 2",
+    "func": "msg.payload = { chatId: 1355843881, type: 'message', content: 'Сигнализация выключена' };\n\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 160,
+    "y": 280,
+    "wires": [
+      [
+        "af7136f3289df062"
+      ]
+    ]
+  },
+  {
+    "id": "0584453a7cf4071b",
+    "type": "serial in",
+    "z": "517bc46ea1daa0c3",
+    "name": "",
+    "serial": "cf415567629d6cf7",
+    "x": 450,
+    "y": 500,
+    "wires": [
+      [
+        "b545833b1e18abd7"
+      ]
+    ]
+  },
+  {
+    "id": "b545833b1e18abd7",
+    "type": "switch",
+    "z": "517bc46ea1daa0c3",
+    "name": "",
+    "property": "payload",
+    "propertyType": "msg",
+    "rules": [
+      {
+        "t": "eq",
+        "v": "a",
+        "vt": "str"
+      },
+      {
+        "t": "eq",
+        "v": "b",
+        "vt": "str"
+      },
+      {
+        "t": "eq",
+        "v": "c",
+        "vt": "str"
+      },
+      {
+        "t": "eq",
+        "v": "d",
+        "vt": "str"
+      },
+      {
+        "t": "eq",
+        "v": "i",
+        "vt": "str"
+      },
+      {
+        "t": "eq",
+        "v": "f",
+        "vt": "str"
+      }
+    ],
+    "checkall": "true",
+    "repair": false,
+    "outputs": 6,
+    "x": 450,
+    "y": 420,
+    "wires": [
+      [
+        "0c3e3e6fef530646",
+        "2132b2cad67827c0"
+      ],
+      [
+        "92e41315c614ba79",
+        "e6142a1b9f99807d"
+      ],
+      [
+        "e6e75e19ef4edc2f",
+        "4ca4dd9c954b0ea9"
+      ],
+      [
+        "474114dd0fdd2cbf",
+        "784bcc26b9ba62b8"
+      ],
+      [
+        "8094f540f1a95bac"
+      ],
+      [
+        "aac2d19754aff0a4"
+      ]
+    ]
+  },
+  {
+    "id": "2132b2cad67827c0",
+    "type": "api-call-service",
+    "z": "517bc46ea1daa0c3",
+    "name": "",
+    "server": "4bafedd0.c272a4",
+    "version": 5,
+    "debugenabled": false,
+    "domain": "input_boolean",
+    "service": "turn_on",
+    "areaId": [],
+    "deviceId": [],
+    "entityId": [
+      "input_boolean.signalizatsiia"
+    ],
+    "data": "",
+    "dataType": "jsonata",
+    "mergeContext": "",
+    "mustacheAltTags": false,
+    "outputProperties": [],
+    "queue": "none",
+    "x": 180,
+    "y": 500,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "3ce0b73aa2fd2845",
+    "type": "telegram command",
+    "z": "517bc46ea1daa0c3",
+    "name": "",
+    "command": "/on_alarm",
+    "description": "",
+    "registercommand": false,
+    "language": "",
+    "scope": "default",
+    "bot": "0e5476ec5f01cef7",
+    "strict": false,
+    "hasresponse": true,
+    "useregex": false,
+    "removeregexcommand": false,
+    "outputs": 2,
+    "x": 360,
+    "y": 760,
+    "wires": [
+      [
+        "2132b2cad67827c0"
+      ],
+      []
+    ]
+  },
+  {
+    "id": "92e41315c614ba79",
+    "type": "api-call-service",
+    "z": "517bc46ea1daa0c3",
+    "name": "",
+    "server": "4bafedd0.c272a4",
+    "version": 5,
+    "debugenabled": false,
+    "domain": "input_boolean",
+    "service": "turn_off",
+    "areaId": [],
+    "deviceId": [],
+    "entityId": [
+      "input_boolean.signalizatsiia"
+    ],
+    "data": "",
+    "dataType": "jsonata",
+    "mergeContext": "",
+    "mustacheAltTags": false,
+    "outputProperties": [],
+    "queue": "none",
+    "x": 180,
+    "y": 420,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "a383bbbf4e1f81ef",
+    "type": "telegram command",
+    "z": "517bc46ea1daa0c3",
+    "name": "",
+    "command": "/off_alarm",
+    "description": "",
+    "registercommand": false,
+    "language": "",
+    "scope": "default",
+    "bot": "0e5476ec5f01cef7",
+    "strict": false,
+    "hasresponse": true,
+    "useregex": false,
+    "removeregexcommand": false,
+    "outputs": 2,
+    "x": 360,
+    "y": 700,
+    "wires": [
+      [
+        "92e41315c614ba79"
+      ],
+      []
+    ]
+  },
+  {
+    "id": "051cce485c09b4e8",
+    "type": "telegram command",
+    "z": "517bc46ea1daa0c3",
+    "name": "",
+    "command": "/help",
+    "description": "",
+    "registercommand": false,
+    "language": "",
+    "scope": "default",
+    "bot": "0e5476ec5f01cef7",
+    "strict": false,
+    "hasresponse": true,
+    "useregex": false,
+    "removeregexcommand": false,
+    "outputs": 2,
+    "x": 110,
+    "y": 720,
+    "wires": [
+      [
+        "885771a28fe9b6a1"
+      ],
+      []
+    ]
+  },
+  {
+    "id": "3ce55f501a868d2e",
+    "type": "telegram sender",
+    "z": "517bc46ea1daa0c3",
+    "name": "",
+    "bot": "0e5476ec5f01cef7",
+    "haserroroutput": false,
+    "outputs": 1,
+    "x": 390,
+    "y": 820,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "885771a28fe9b6a1",
+    "type": "function",
+    "z": "517bc46ea1daa0c3",
+    "name": "function 3",
+    "func": "msg.payload = { chatId: 1355843881, type: 'message', content: 'Команды: /on_alarm\\n/off_alarm\\n/on_general_light\\n/off_general_light\\n/on_light_above_the_work_area\\n/off_light_above_the_work_area' };\n\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 140,
+    "y": 800,
+    "wires": [
+      [
+        "3ce55f501a868d2e"
+      ]
+    ]
+  },
+  {
+    "id": "969ab0d9129b17aa",
+    "type": "server-state-changed",
+    "z": "517bc46ea1daa0c3",
+    "name": "основной свет",
+    "server": "4bafedd0.c272a4",
+    "version": 4,
+    "exposeToHomeAssistant": false,
+    "haConfig": [
+      {
+        "property": "name",
+        "value": ""
+      },
+      {
+        "property": "icon",
+        "value": ""
+      }
+    ],
+    "entityidfilter": "light.general_light",
+    "entityidfiltertype": "exact",
+    "outputinitially": false,
+    "state_type": "str",
+    "haltifstate": "",
+    "halt_if_type": "str",
+    "halt_if_compare": "is",
+    "outputs": 1,
+    "output_only_on_state_change": true,
+    "for": "0",
+    "forType": "num",
+    "forUnits": "minutes",
+    "ignorePrevStateNull": false,
+    "ignorePrevStateUnknown": false,
+    "ignorePrevStateUnavailable": false,
+    "ignoreCurrentStateUnknown": false,
+    "ignoreCurrentStateUnavailable": false,
+    "outputProperties": [
+      {
+        "property": "payload",
+        "propertyType": "msg",
+        "value": "",
+        "valueType": "entityState"
+      },
+      {
+        "property": "data",
+        "propertyType": "msg",
+        "value": "",
+        "valueType": "eventData"
+      },
+      {
+        "property": "topic",
+        "propertyType": "msg",
+        "value": "",
+        "valueType": "triggerId"
+      }
+    ],
+    "x": 740,
+    "y": 100,
+    "wires": [
+      [
+        "1928a61b2a5b5c96"
+      ]
+    ]
+  },
+  {
+    "id": "1928a61b2a5b5c96",
+    "type": "switch",
+    "z": "517bc46ea1daa0c3",
+    "name": "",
+    "property": "payload",
+    "propertyType": "msg",
+    "rules": [
+      {
+        "t": "eq",
+        "v": "on",
+        "vt": "str"
+      },
+      {
+        "t": "eq",
+        "v": "off",
+        "vt": "str"
+      }
+    ],
+    "checkall": "true",
+    "repair": false,
+    "outputs": 2,
+    "x": 730,
+    "y": 160,
+    "wires": [
+      [
+        "e6e75e19ef4edc2f",
+        "2c4f2ed84a29d348"
+      ],
+      [
+        "474114dd0fdd2cbf",
+        "0608475448fd07ff"
+      ]
+    ]
+  },
+  {
+    "id": "e6e75e19ef4edc2f",
+    "type": "trigger",
+    "z": "517bc46ea1daa0c3",
+    "name": "",
+    "op1": "С",
+    "op2": "",
+    "op1type": "str",
+    "op2type": "nul",
+    "duration": "1",
+    "extend": false,
+    "overrideDelay": false,
+    "units": "ms",
+    "reset": "0",
+    "bytopic": "all",
+    "topic": "topic",
+    "outputs": 1,
+    "x": 990,
+    "y": 160,
+    "wires": [
+      [
+        "044e8db787426816"
+      ]
+    ]
+  },
+  {
+    "id": "474114dd0fdd2cbf",
+    "type": "trigger",
+    "z": "517bc46ea1daa0c3",
+    "name": "",
+    "op1": "D",
+    "op2": "",
+    "op1type": "str",
+    "op2type": "nul",
+    "duration": "1",
+    "extend": false,
+    "overrideDelay": false,
+    "units": "ms",
+    "reset": "0",
+    "bytopic": "all",
+    "topic": "topic",
+    "outputs": 1,
+    "x": 990,
+    "y": 200,
+    "wires": [
+      [
+        "044e8db787426816"
+      ]
+    ]
+  },
+  {
+    "id": "2c4f2ed84a29d348",
+    "type": "function",
+    "z": "517bc46ea1daa0c3",
+    "name": "function 4",
+    "func": "msg.payload = { chatId: 1355843881, type: 'message', content: 'Основной свет включён' };\n\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 1000,
+    "y": 240,
+    "wires": [
+      [
+        "af7136f3289df062"
+      ]
+    ]
+  },
+  {
+    "id": "0608475448fd07ff",
+    "type": "function",
+    "z": "517bc46ea1daa0c3",
+    "name": "function 5",
+    "func": "msg.payload = { chatId: 1355843881, type: 'message', content: 'Основной свет выключен' };\n\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 1000,
+    "y": 280,
+    "wires": [
+      [
+        "af7136f3289df062"
+      ]
+    ]
+  },
+  {
+    "id": "4ca4dd9c954b0ea9",
+    "type": "api-call-service",
+    "z": "517bc46ea1daa0c3",
+    "name": "",
+    "server": "4bafedd0.c272a4",
+    "version": 5,
+    "debugenabled": false,
+    "domain": "light",
+    "service": "turn_on",
+    "areaId": [],
+    "deviceId": [],
+    "entityId": [
+      "light.general_light"
+    ],
+    "data": "",
+    "dataType": "jsonata",
+    "mergeContext": "",
+    "mustacheAltTags": false,
+    "outputProperties": [],
+    "queue": "none",
+    "x": 990,
+    "y": 400,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "784bcc26b9ba62b8",
+    "type": "api-call-service",
+    "z": "517bc46ea1daa0c3",
+    "name": "",
+    "server": "4bafedd0.c272a4",
+    "version": 5,
+    "debugenabled": false,
+    "domain": "light",
+    "service": "turn_off",
+    "areaId": [],
+    "deviceId": [],
+    "entityId": [
+      "light.general_light"
+    ],
+    "data": "",
+    "dataType": "jsonata",
+    "mergeContext": "",
+    "mustacheAltTags": false,
+    "outputProperties": [],
+    "queue": "none",
+    "x": 990,
+    "y": 460,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "70c77ee95495a9c3",
+    "type": "telegram command",
+    "z": "517bc46ea1daa0c3",
+    "name": "",
+    "command": "/on_general_light",
+    "description": "",
+    "registercommand": false,
+    "language": "",
+    "scope": "default",
+    "bot": "0e5476ec5f01cef7",
+    "strict": false,
+    "hasresponse": true,
+    "useregex": false,
+    "removeregexcommand": false,
+    "outputs": 2,
+    "x": 560,
+    "y": 760,
+    "wires": [
+      [
+        "4ca4dd9c954b0ea9"
+      ],
+      []
+    ]
+  },
+  {
+    "id": "76832fc42f21286f",
+    "type": "telegram command",
+    "z": "517bc46ea1daa0c3",
+    "name": "",
+    "command": "/off_general_light",
+    "description": "",
+    "registercommand": false,
+    "language": "",
+    "scope": "default",
+    "bot": "0e5476ec5f01cef7",
+    "strict": false,
+    "hasresponse": true,
+    "useregex": false,
+    "removeregexcommand": false,
+    "outputs": 2,
+    "x": 560,
+    "y": 700,
+    "wires": [
+      [
+        "784bcc26b9ba62b8"
+      ],
+      []
+    ]
+  },
+  {
+    "id": "5f7cc09d9290ce25",
+    "type": "server-state-changed",
+    "z": "517bc46ea1daa0c3",
+    "name": "Свет над рабочим местом",
+    "server": "4bafedd0.c272a4",
+    "version": 4,
+    "exposeToHomeAssistant": false,
+    "haConfig": [
+      {
+        "property": "name",
+        "value": ""
+      },
+      {
+        "property": "icon",
+        "value": ""
+      }
+    ],
+    "entityidfilter": "light.light_above_the_work_area",
+    "entityidfiltertype": "exact",
+    "outputinitially": false,
+    "state_type": "str",
+    "haltifstate": "",
+    "halt_if_type": "str",
+    "halt_if_compare": "is",
+    "outputs": 1,
+    "output_only_on_state_change": true,
+    "for": "0",
+    "forType": "num",
+    "forUnits": "minutes",
+    "ignorePrevStateNull": false,
+    "ignorePrevStateUnknown": false,
+    "ignorePrevStateUnavailable": false,
+    "ignoreCurrentStateUnknown": false,
+    "ignoreCurrentStateUnavailable": false,
+    "outputProperties": [
+      {
+        "property": "payload",
+        "propertyType": "msg",
+        "value": "",
+        "valueType": "entityState"
+      },
+      {
+        "property": "data",
+        "propertyType": "msg",
+        "value": "",
+        "valueType": "eventData"
+      },
+      {
+        "property": "topic",
+        "propertyType": "msg",
+        "value": "",
+        "valueType": "triggerId"
+      }
+    ],
+    "x": 990,
+    "y": 580,
+    "wires": [
+      [
+        "32b24d2024674b3f"
+      ]
+    ]
+  },
+  {
+    "id": "32b24d2024674b3f",
+    "type": "switch",
+    "z": "517bc46ea1daa0c3",
+    "name": "",
+    "property": "payload",
+    "propertyType": "msg",
+    "rules": [
+      {
+        "t": "eq",
+        "v": "on",
+        "vt": "str"
+      },
+      {
+        "t": "eq",
+        "v": "off",
+        "vt": "str"
+      }
+    ],
+    "checkall": "true",
+    "repair": false,
+    "outputs": 2,
+    "x": 950,
+    "y": 640,
+    "wires": [
+      [
+        "d54b3e5f34988ff3",
+        "e8d5928a53694034"
+      ],
+      [
+        "b652b10c734534a4",
+        "b6208997940d9cae"
+      ]
+    ]
+  },
+  {
+    "id": "d54b3e5f34988ff3",
+    "type": "trigger",
+    "z": "517bc46ea1daa0c3",
+    "name": "",
+    "op1": "I",
+    "op2": "",
+    "op1type": "str",
+    "op2type": "nul",
+    "duration": "1",
+    "extend": false,
+    "overrideDelay": false,
+    "units": "ms",
+    "reset": "0",
+    "bytopic": "all",
+    "topic": "topic",
+    "outputs": 1,
+    "x": 1210,
+    "y": 640,
+    "wires": [
+      [
+        "044e8db787426816"
+      ]
+    ]
+  },
+  {
+    "id": "b652b10c734534a4",
+    "type": "trigger",
+    "z": "517bc46ea1daa0c3",
+    "name": "",
+    "op1": "F",
+    "op2": "",
+    "op1type": "str",
+    "op2type": "nul",
+    "duration": "1",
+    "extend": false,
+    "overrideDelay": false,
+    "units": "ms",
+    "reset": "0",
+    "bytopic": "all",
+    "topic": "topic",
+    "outputs": 1,
+    "x": 1210,
+    "y": 680,
+    "wires": [
+      [
+        "044e8db787426816"
+      ]
+    ]
+  },
+  {
+    "id": "e8d5928a53694034",
+    "type": "function",
+    "z": "517bc46ea1daa0c3",
+    "name": "function 6",
+    "func": "msg.payload = { chatId: 1355843881, type: 'message', content: 'Свет над рабочим местом  включён' };\n\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 1220,
+    "y": 720,
+    "wires": [
+      [
+        "af7136f3289df062"
+      ]
+    ]
+  },
+  {
+    "id": "b6208997940d9cae",
+    "type": "function",
+    "z": "517bc46ea1daa0c3",
+    "name": "function 7",
+    "func": "msg.payload = { chatId: 1355843881, type: 'message', content: 'Свет над рабочим местом выключен' };\n\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 1220,
+    "y": 760,
+    "wires": [
+      [
+        "af7136f3289df062"
+      ]
+    ]
+  },
+  {
+    "id": "8094f540f1a95bac",
+    "type": "api-call-service",
+    "z": "517bc46ea1daa0c3",
+    "name": "",
+    "server": "4bafedd0.c272a4",
+    "version": 5,
+    "debugenabled": false,
+    "domain": "light",
+    "service": "turn_on",
+    "areaId": [],
+    "deviceId": [],
+    "entityId": [
+      "light.light_above_the_work_area"
+    ],
+    "data": "",
+    "dataType": "jsonata",
+    "mergeContext": "",
+    "mustacheAltTags": false,
+    "outputProperties": [],
+    "queue": "none",
+    "x": 1210,
+    "y": 880,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "aac2d19754aff0a4",
+    "type": "api-call-service",
+    "z": "517bc46ea1daa0c3",
+    "name": "",
+    "server": "4bafedd0.c272a4",
+    "version": 5,
+    "debugenabled": false,
+    "domain": "light",
+    "service": "turn_off",
+    "areaId": [],
+    "deviceId": [],
+    "entityId": [
+      "light.light_above_the_work_area"
+    ],
+    "data": "",
+    "dataType": "jsonata",
+    "mergeContext": "",
+    "mustacheAltTags": false,
+    "outputProperties": [],
+    "queue": "none",
+    "x": 1210,
+    "y": 940,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "c4ec7e57d3d6ae7f",
+    "type": "telegram command",
+    "z": "517bc46ea1daa0c3",
+    "name": "",
+    "command": "/off_light_above_the_work_area",
+    "description": "",
+    "registercommand": false,
+    "language": "",
+    "scope": "default",
+    "bot": "0e5476ec5f01cef7",
+    "strict": false,
+    "hasresponse": true,
+    "useregex": false,
+    "removeregexcommand": false,
+    "outputs": 2,
+    "x": 650,
+    "y": 880,
+    "wires": [
+      [
+        "aac2d19754aff0a4"
+      ],
+      []
+    ]
+  },
+  {
+    "id": "a5201edc843791df",
+    "type": "telegram command",
+    "z": "517bc46ea1daa0c3",
+    "name": "",
+    "command": "/on_light_above_the_work_area",
+    "description": "",
+    "registercommand": false,
+    "language": "",
+    "scope": "default",
+    "bot": "0e5476ec5f01cef7",
+    "strict": false,
+    "hasresponse": true,
+    "useregex": false,
+    "removeregexcommand": false,
+    "outputs": 2,
+    "x": 650,
+    "y": 820,
+    "wires": [
+      [
+        "8094f540f1a95bac"
+      ],
+      []
+    ]
+  },
+  {
+    "id": "aa0f220093e70063",
+    "type": "server-state-changed",
+    "z": "517bc46ea1daa0c3",
+    "name": "",
+    "server": "4bafedd0.c272a4",
+    "version": 4,
+    "exposeToHomeAssistant": false,
+    "haConfig": [
+      {
+        "property": "name",
+        "value": ""
+      },
+      {
+        "property": "icon",
+        "value": ""
+      }
+    ],
+    "entityidfilter": "automation.novaia_avtomatizatsiia_2",
+    "entityidfiltertype": "exact",
+    "outputinitially": false,
+    "state_type": "str",
+    "haltifstate": "",
+    "halt_if_type": "str",
+    "halt_if_compare": "is",
+    "outputs": 1,
+    "output_only_on_state_change": true,
+    "for": "0",
+    "forType": "num",
+    "forUnits": "minutes",
+    "ignorePrevStateNull": false,
+    "ignorePrevStateUnknown": false,
+    "ignorePrevStateUnavailable": false,
+    "ignoreCurrentStateUnknown": false,
+    "ignoreCurrentStateUnavailable": false,
+    "outputProperties": [
+      {
+        "property": "payload",
+        "propertyType": "msg",
+        "value": "",
+        "valueType": "entityState"
+      },
+      {
+        "property": "data",
+        "propertyType": "msg",
+        "value": "",
+        "valueType": "eventData"
+      },
+      {
+        "property": "topic",
+        "propertyType": "msg",
+        "value": "",
+        "valueType": "triggerId"
+      }
+    ],
+    "x": 210,
+    "y": 1000,
+    "wires": [
+      [
+        "25925eab7566ef68",
+        "82cf79744ae722a3"
+      ]
+    ]
+  },
+  {
+    "id": "25925eab7566ef68",
+    "type": "function",
+    "z": "517bc46ea1daa0c3",
+    "name": "function 8",
+    "func": "msg.payload = { chatId: 1355843881, type: 'message', content: 'Тревога кто-то открыл дверь' };\n\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 420,
+    "y": 1060,
+    "wires": [
+      [
+        "af7136f3289df062"
+      ]
+    ]
+  },
+  {
+    "id": "82cf79744ae722a3",
+    "type": "debug",
+    "z": "517bc46ea1daa0c3",
+    "name": "debug 1",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "false",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 820,
+    "y": 1040,
+    "wires": []
+  }
+]
