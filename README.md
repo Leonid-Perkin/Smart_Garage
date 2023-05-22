@@ -1,4 +1,4 @@
-# Smart_Garage
+# Smart_Garage ![C++](https://img.shields.io/badge/c++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white) ![Home Assistant](https://img.shields.io/badge/home%20assistant-%2341BDF5.svg?style=for-the-badge&logo=home-assistant&logoColor=white) ![Raspberry Pi](https://img.shields.io/badge/-RaspberryPi-C51A4A?style=for-the-badge&logo=Raspberry-Pi)
 ![horizontal_on_white_by_logaster](https://user-images.githubusercontent.com/60135318/194169024-dc99a5fd-6d7a-499d-ae55-64ea58bfa97f.png)
 
 проект умного гаража
